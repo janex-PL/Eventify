@@ -83,7 +83,7 @@
 
 ### Built With
 
-[![TypeScript][Typescriptlang.org]][Typescript-url] [![Angular][Angular.io]][Angular-url] [![Python][Python.org]][Python-url] [![Django][Djangoproject.com]][Django-url] [![Docker][Docker.com]][Docker-url]
+[![Dotnet]][Dotnet-url] [![Blazor]][Blazor-url] [![Python][Python.org]][Python-url] [![Django][Djangoproject.com]][Django-url] [![Docker][Docker.com]][Docker-url]
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
@@ -150,8 +150,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [issues-url]: https://github.com/janex-PL/Eventify/issues
 [license-shield]: https://img.shields.io/github/license/janex-PL/Eventify.svg?style=for-the-badge
 [license-url]: https://github.com/janex-PL/Eventify/blob/main/LICENSE
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
+[Dotnet]:https://img.shields.io/badge/.NET-512bd4?style=for-the-badge&logo=dotnet&logoColor=white
+[Dotnet-url]:https://dotnet.microsoft.com/en-us/
+[Blazor]:https://img.shields.io/badge/Blazor-800080?style=for-the-badge&logo=blazor&logoColor=white
+[Blazor-url]:https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor
 [Python.org]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://angular.io/
 [Djangoproject.com]: https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white
