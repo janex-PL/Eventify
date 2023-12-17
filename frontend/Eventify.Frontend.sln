@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventify.Frontend.WebAssembly", "Eventify.Frontend.WebAssembly\Eventify.Frontend.WebAssembly.csproj", "{0D426100-DFA1-4343-B95A-1AF979D69A86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventify.Frontend.Application", "Eventify.Frontend.Application\Eventify.Frontend.Application.csproj", "{B2CEBEBE-771A-4299-98AA-1F34E531E680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventify.Frontend.Infrastructure", "Eventify.Frontend.Infrastructure\Eventify.Frontend.Infrastructure.csproj", "{A9391190-AA46-445B-887E-06F1395E3A80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{0D426100-DFA1-4343-B95A-1AF979D69A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D426100-DFA1-4343-B95A-1AF979D69A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D426100-DFA1-4343-B95A-1AF979D69A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2CEBEBE-771A-4299-98AA-1F34E531E680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CEBEBE-771A-4299-98AA-1F34E531E680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CEBEBE-771A-4299-98AA-1F34E531E680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CEBEBE-771A-4299-98AA-1F34E531E680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9391190-AA46-445B-887E-06F1395E3A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9391190-AA46-445B-887E-06F1395E3A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9391190-AA46-445B-887E-06F1395E3A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9391190-AA46-445B-887E-06F1395E3A80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
