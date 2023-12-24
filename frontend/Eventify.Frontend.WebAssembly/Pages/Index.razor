@@ -1,7 +1,65 @@
 ﻿@page "/"
+@using MudBlazor
+@using Eventify.Frontend.Application
+@inject IEventService EventService
+@inject NavigationManager Navigation
 
-<PageTitle>Index</PageTitle>
+<MudGrid Justify="Justify.SpaceBetween" Class="mb-8">
+    <MudItem xs="12" sm="6">
+        <MudText Typo="Typo.h3" Class="my-2">The people platform— Where interests become friendships</MudText>
+        <MudText Typo="Typo.body1" Class="my-2">Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on Meetup. Events are happening every day—sign up to join the fun.</MudText>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-2">Join Eventify</MudButton>
+    </MudItem>
+</MudGrid>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor!</MudText>
-<MudAlert Severity="Severity.Normal">You can find documentation and examples on our website here: <MudLink Href="https://mudblazor.com" Typo="Typo.body2" Color="Color.Inherit"><b>www.mudblazor.com</b></MudLink></MudAlert>
+<MudGrid Justify="Justify.SpaceBetween" Class="my-4">
+    <MudItem xs="12" sm="6">
+        <MudText Typo="Typo.h5">Events near</MudText>
+    </MudItem>
+    <MudItem xs="12" sm="6" class="d-flex justify-sm-end flex-grow-1 flex-sm-grow-0">
+        <MudButton Variant="Variant.Text" Class="flex-grow-1 flex-sm-grow-0" Color="Color.Primary">See all events</MudButton>  
+    </MudItem>
+</MudGrid>
+
+<MudGrid Justify="Justify.Center" Spacing="4">
+    @foreach (var e in _events)
+    {
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudCard Class="cursor-pointer" @onclick="() => NavigateToEventDetails(e.Id)">
+                <MudCardContent Class="pa-0">
+                    @*<MudImage Src="@e.ImageCoverUrl" ObjectFit="ObjectFit.ScaleDown" Fluid Class="rounded-t" Elevation="0" /> *@
+                    @if (!IsImageLoaded.All(x => x))
+                    {
+                        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="150px" Class="rounded-t" />
+                    }
+                    <MudImage Src="@e.ImageCoverUrl" ObjectFit="ObjectFit.ScaleDown" Fluid Class="rounded-t" Elevation="0"
+                        Style="@(IsImageLoaded.All(x => x) ? "" : "display:none;")"
+                       @onload="() => IsImageLoaded[e.Id] = true"/>
+                    <MudStack Class="pa-4">
+                        
+                        <MudText Typo="Typo.h6">@e.Name</MudText>
+                        <MudText>Organizer: </MudText>
+                        <MudGrid Justify="Justify.FlexStart">
+                            <MudItem xs="12">
+                                <MudStack Row="true" Spacing="2" Justify="Justify.FlexStart">
+                                    <MudIcon Icon="@Icons.Material.Filled.Event" Size="Size.Medium" />
+                                    <MudText Typo="Typo.body1"> @e.StartingAt.ToString("dd.MM.yyyy hh:mm")</MudText>
+                                </MudStack>
+                            </MudItem>
+                        </MudGrid>
+                        <MudGrid Justify="Justify.FlexStart">
+                            <MudItem xs="6">
+                                <MudStack Row="true" Spacing="2" Justify="Justify.FlexStart">
+                                    <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Medium" />
+                                    <MudText Typo="Typo.body1"> @e.TotalAtendees going</MudText>
+                                </MudStack>
+                            </MudItem>
+                        </MudGrid>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    }
+
+</MudGrid>
+
