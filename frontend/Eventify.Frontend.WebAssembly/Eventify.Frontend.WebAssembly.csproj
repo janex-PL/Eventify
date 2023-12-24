@@ -11,6 +11,11 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
 		<PackageReference Include="MudBlazor" Version="6.0.13" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Eventify.Frontend.Application\Eventify.Frontend.Application.csproj" />
+	  <ProjectReference Include="..\Eventify.Frontend.Infrastructure\Eventify.Frontend.Infrastructure.csproj" />
+	</ItemGroup>
 	
 	
 </Project>
