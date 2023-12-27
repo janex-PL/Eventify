@@ -8,7 +8,7 @@
     <MudItem xs="12" sm="6">
         <MudText Typo="Typo.h3" Class="my-2">The people platform— Where interests become friendships</MudText>
         <MudText Typo="Typo.body1" Class="my-2">Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on Meetup. Events are happening every day—sign up to join the fun.</MudText>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-2">Join Eventify</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Tertiary" Class="my-2">Join Eventify</MudButton>
     </MudItem>
 </MudGrid>
 
@@ -17,7 +17,7 @@
         <MudText Typo="Typo.h5">Events near</MudText>
     </MudItem>
     <MudItem xs="12" sm="6" class="d-flex justify-sm-end flex-grow-1 flex-sm-grow-0">
-        <MudButton Variant="Variant.Text" Class="flex-grow-1 flex-sm-grow-0" Color="Color.Primary">See all events</MudButton>  
+        <MudButton Variant="Variant.Text" Class="flex-grow-1 flex-sm-grow-0" Color="Color.Tertiary">See all events</MudButton>  
     </MudItem>
 </MudGrid>
 
@@ -25,9 +25,9 @@
     @foreach (var e in _events)
     {
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudCard Class="cursor-pointer" @onclick="() => NavigateToEventDetails(e.Id)">
+            <MudButton Variant="Variant.Filled" FullWidth class="pa-0" OnClick="() => NavigateToEventDetails(e.Id)" ButtonType="ButtonType.Button">
+            <MudCard style="width: 100%;">
                 <MudCardContent Class="pa-0">
-                    @*<MudImage Src="@e.ImageCoverUrl" ObjectFit="ObjectFit.ScaleDown" Fluid Class="rounded-t" Elevation="0" /> *@
                     @if (!IsImageLoaded.All(x => x))
                     {
                         <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="150px" Class="rounded-t" />
@@ -36,9 +36,10 @@
                         Style="@(IsImageLoaded.All(x => x) ? "" : "display:none;")"
                        @onload="() => IsImageLoaded[e.Id] = true"/>
                     <MudStack Class="pa-4">
-                        
-                        <MudText Typo="Typo.h6">@e.Name</MudText>
-                        <MudText>Organizer: </MudText>
+                        @if(IsImageLoaded.All(x => x))
+                        {
+                        <MudText Typo="Typo.h6" Align="Align.Left">@e.Name</MudText>
+                        <MudText Typo="Typo.body1" Align="Align.Left">Organizer: </MudText>
                         <MudGrid Justify="Justify.FlexStart">
                             <MudItem xs="12">
                                 <MudStack Row="true" Spacing="2" Justify="Justify.FlexStart">
@@ -55,9 +56,18 @@
                                 </MudStack>
                             </MudItem>
                         </MudGrid>
+                        }
+                        @if(!IsImageLoaded.All(x => x))
+                        {
+                            <MudSkeleton SkeletonType="SkeletonType.Text" />
+                            <MudSkeleton SkeletonType="SkeletonType.Text" />
+                            <MudSkeleton SkeletonType="SkeletonType.Text" />
+                            <MudSkeleton SkeletonType="SkeletonType.Text" />
+                        }
                     </MudStack>
                 </MudCardContent>
             </MudCard>
+            </MudButton>
         </MudItem>
     }
 

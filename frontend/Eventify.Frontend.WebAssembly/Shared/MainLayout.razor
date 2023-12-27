@@ -1,23 +1,64 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Navigation
-<MudThemeProvider />
+<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
 
 <MudLayout>
     <MudAppBar Elevation="0" Color="Color.Transparent" Fixed="false" DisableGutters>
         <NavLink ActiveClass="d-flex" class="mx-6" href="/">
             <MudText Color="Color.Primary" Typo="Typo.h5" Style="font-family: 'Pacifico', cursive;">Eventify</MudText>
         </NavLink>
-        <MudStack Row>
-        <MudTextField   Margin="Margin.Dense" @bind-Value="SearchQuery" Placeholder="Search" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"/>
-        <MudTextField Margin="Margin.Dense" @bind-Value="SearchQuery" Placeholder="Location" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.LocationCity"/>
-<MudIconButton Icon="@Icons.Material.Filled.Search" Variant="Variant.Filled" Color="Color.Primary" class="my-1" />
-
-        </MudStack>
-
-        <MudSpacer />
-
-        <MudButton Variant="Variant.Text">Log in</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-4" >Sign up</MudButton>
+        <MudBreakpointProvider>
+            <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                <MudStack Row>
+                    <MudTextField Margin="Margin.Dense" @bind-Value="SearchQuery" Clearable="true" Placeholder="Search"
+                        Variant="Variant.Outlined" Adornment="Adornment.Start"
+                        AdornmentIcon="@Icons.Material.Filled.Search" />
+                    <MudTextField Margin="Margin.Dense" @bind-Value="LocationQuery" Placeholder="Location"
+                        Variant="Variant.Outlined" Adornment="Adornment.Start"
+                        AdornmentIcon="@Icons.Material.Filled.LocationCity" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Search" Variant="Variant.Filled" Color="Color.Primary"
+                        class="my-1" />
+                </MudStack>
+                <MudSpacer />
+                <DarkModeSwitch @bind-IsDarkMode=_isDarkMode />
+                <MudDivider Vertical="true" FlexItem="true" Class="ma-4" />
+                <MudButton Variant="Variant.Text">Log in</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Tertiary" Class="mx-4" style="white-space: nowrap;">
+                    Sign up</MudButton>
+            </MudHidden>
+            <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+                <MudSpacer />
+                <DarkModeSwitch @bind-IsDarkMode=_isDarkMode />
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" OnClick="OpenDrawer"
+                    Class="mx-4" />
+                <MudDrawer @bind-Open="@open" Anchor="Anchor.Top" Elevation="1" Variant="DrawerVariant.Temporary">
+                    <MudDrawerHeader>
+                        <NavLink ActiveClass="d-flex" href="/">
+                            <MudText Color="Color.Primary" Typo="Typo.h5" Style="font-family: 'Pacifico', cursive;">Eventify</MudText>
+                        </NavLink>
+                    </MudDrawerHeader>
+                    <MudStack Spacing="2" Class="ma-4">
+                        <MudTextField Margin="Margin.Dense" @bind-Value="SearchQuery" Clearable="true" Placeholder="Search"
+                            Variant="Variant.Outlined" Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.Search" />
+                        <MudTextField Margin="Margin.Dense" @bind-Value="SearchQuery" Placeholder="Location"
+                            Variant="Variant.Outlined" Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.LocationCity" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Search" Variant="Variant.Filled" Color="Color.Primary" />
+                        <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                        <MudGrid Justify="Justify.SpaceEvenly">
+                            <MudItem xs="4">
+                                <MudButton Variant="Variant.Text" FullWidth>Log in</MudButton>
+                            </MudItem>
+                            <MudItem xs="4">
+                                <MudButton Variant="Variant.Filled" Color="Color.Tertiary" FullWidth
+                                    style="white-space: nowrap;">Sign up</MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    </MudStack>
+                </MudDrawer>
+            </MudHidden>
+        </MudBreakpointProvider>
     </MudAppBar>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large">
@@ -28,8 +69,34 @@
 
 @code {
     public string SearchQuery { get; set; } = "";
+    public string LocationQuery { get; set; } = "";
     public void NavigateToHome()
     {
         Navigation.NavigateTo("/");
     }
+    private bool open = false;
+
+    private bool _isDarkMode;
+    private MudThemeProvider _mudThemeProvider;
+    public void OpenDrawer()
+    {
+        open = true;
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _isDarkMode = await _mudThemeProvider.GetSystemPreference();
+            await _mudThemeProvider.WatchSystemPreference(OnSystemPreferenceChanged);
+            StateHasChanged();
+        }
+    }
+
+    private Task OnSystemPreferenceChanged(bool newValue)
+    {
+        _isDarkMode = newValue;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
 }
