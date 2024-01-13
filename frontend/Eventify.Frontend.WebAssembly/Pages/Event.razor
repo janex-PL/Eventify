@@ -1,0 +1,155 @@
+﻿@page "/event/{eventid:int}"
+@using MudBlazor
+@using Eventify.Frontend.Application
+
+@inject NavigationManager NavigationManager
+@inject IEventService EventService
+
+
+@if(IsLoading)
+{
+    <MudContainer Class="d-flex justify-center my-16">
+        <MudProgressCircular Color="Color.Default" Size="Size.Large" Indeterminate="true" />
+    </MudContainer>
+}
+@if(!IsLoading && EventDto is null)
+{
+    <NotFoundComponent/>
+}
+@if(!IsLoading && EventDto is not null)
+{
+    <MudText Typo="Typo.h3" GutterBottom>@EventDto.Name</MudText>
+    <MudStack Row AlignItems="AlignItems.Center">
+        <MudSkeleton SkeletonType="SkeletonType.Circle" Height="50px" Width="50px"></MudSkeleton>
+        <MudStack Spacing="1">
+            <MudText Typo="Typo.body1">Hosted by</MudText>
+            <MudText Typo="Typo.h6">Someone</MudText>
+        </MudStack>
+    </MudStack>
+
+    <MudDivider Class="my-6"></MudDivider>
+
+    <MudGrid Class="flex-md-row-reverse">
+        <MudItem xs="12" md="4" Class="">
+                <MudStack Spacing="6">
+                    <MudStack Row>
+                        <MudIcon Icon="@Icons.Material.Filled.AccessTime" />
+                        <MudText Typo="Typo.body1">@EventDto.StartingAt.ToString("dddd, MMMM dd, yyyy 'at' h:mm tt")</MudText>
+                    </MudStack>
+                    <MudStack Row AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.LocationOn" />
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.body1">@EventDto.Location.Name</MudText>
+                            <MudText Typo="Typo.body2">@EventDto.Location.AddressLine1, @EventDto.Location.City</MudText>
+                        </MudStack>
+                    </MudStack>
+                    <MudPaper Class="pa-4">
+
+                    <MudStack Row AlignItems="AlignItems.Center">
+                        <MudSkeleton Width="75px" Height="75px" SkeletonType="SkeletonType.Rectangle" class="rounded"/>
+                        <MudStack Spacing="2">
+                            <MudText Typo="Typo.h6">Awesome Group</MudText>
+                            <MudText Typo="Typo.body2" Align="Align.Start">Public group</MudText>
+                            <MudLink Href="#" Color="Color.Tertiary">See more events</MudLink>
+
+                        </MudStack>
+                    </MudStack>
+                    </MudPaper>
+                    <MudSkeleton Width="100%" Height="400px" SkeletonType="SkeletonType.Rectangle"/>
+
+                </MudStack>
+        </MudItem>
+        <MudItem xs="12" md="8" class="">
+            <MudImage Src="@EventDto.ImageCoverUrl" ObjectFit="ObjectFit.Fill" Fluid Class="rounded" Elevation="2"/>
+            <MudText Typo="Typo.h5">Details</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil debitis deserunt, officia molestias magni perferendis molestiae unde ipsum, odit assumenda velit harum architecto, est suscipit blanditiis minus voluptates distinctio maxime.</MudText>
+            <MudContainer Class="my-6 px-0">
+            @foreach(var tag in Tags)
+            {
+                <MudChip Variant="Variant.Filled" Color="Color.Tertiary" >@tag</MudChip>
+            }        
+            </MudContainer>
+            <MudStack Row Justify="Justify.SpaceBetween">
+                <MudText Typo="Typo.h5">Attendees (@EventDto.TotalAtendees)</MudText>
+                <MudButton Variant="Variant.Text" Color="Color.Tertiary">See all</MudButton>  
+            </MudStack>
+                <MudGrid Justify="Justify.SpaceAround" Spacing="2" Class="my-4">
+                    <MudItem xs="6" md="3">
+                    <MudCard Class="py-4 px-8">
+                        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+                            <MudSkeleton SkeletonType="SkeletonType.Circle" Width="75px" Height="75px"></MudSkeleton>
+                            <MudText Typo="Typo.body1">Jan</MudText>
+                            <MudText Typo="Typo.body2">Organizer</MudText>
+                        </MudStack>
+                    </MudCard>
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudCard Class="py-4 px-8">
+                        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+                            <MudSkeleton SkeletonType="SkeletonType.Circle" Width="75px" Height="75px"></MudSkeleton>
+                            <MudText Typo="Typo.body1">Jan</MudText>
+                            <MudText Typo="Typo.body2">Member</MudText>
+                        </MudStack>
+                    </MudCard>
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudCard Class="py-4 px-8">
+                        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+                            <MudSkeleton SkeletonType="SkeletonType.Circle" Width="75px" Height="75px"></MudSkeleton>
+                            <MudText Typo="Typo.body1">Jan</MudText>
+                            <MudText Typo="Typo.body2">Member</MudText>
+                        </MudStack>
+                    </MudCard>
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudCard Class="py-4 px-8">
+                        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+                            <MudSkeleton SkeletonType="SkeletonType.Circle" Width="75px" Height="75px"></MudSkeleton>
+                            <MudText Typo="Typo.body1">Jan</MudText>
+                            <MudText Typo="Typo.body2">Member</MudText>
+                        </MudStack>
+                    </MudCard>
+                    </MudItem>
+                </MudGrid>
+        </MudItem>
+        <MudItem xs="12" md="4" Class="">
+                
+        </MudItem>
+        <MudItem xs="12" md="8" class="">
+            <MudPaper Class="pa-4">
+                <MudGrid Justify="Justify.SpaceBetween">
+                    <MudItem>
+                        <MudStack AlignItems="AlignItems.Start">
+                            <MudText Typo="Typo.body2">@EventDto.StartingAt.ToString("dd.MM.yyyy 'at' h:mm tt")</MudText>
+                            <MudText Typo="Typo.h6">@EventDto.Name</MudText>
+                        </MudStack>
+                    </MudItem>
+                    <MudItem>
+                        <MudStack Row>
+                            <MudIconButton Icon="@Icons.Material.Outlined.Bookmark" Variant="Variant.Outlined" Color="Color.Tertiary" Class="pa-5"/>
+                            <MudIconButton Icon="@Icons.Material.Filled.Share" Variant="Variant.Outlined" Color="Color.Tertiary" Class="pa-5"/>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="px-8">Attend</MudButton>
+                        </MudStack>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+        
+    </MudGrid>
+}
+@code {
+
+    [Parameter]
+    public int EventId { get; set; }
+
+    public List<string> Tags {get;set;} = new List<string>{ "Something", "Else", "Anything", "Everything"};
+
+    public EventDto? EventDto { get; set; }
+    public bool IsLoading { get; set; } = true;
+    protected override async Task OnInitializedAsync()
+    {
+        EventDto = EventService.GetById(EventId);
+        await Task.Delay(1000);
+        IsLoading = false;
+    }
+}
